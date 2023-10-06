@@ -1,24 +1,23 @@
-# Project Title
+# Java Assignment #6
 
-A brief description of your project goes here.
+Create an app from scratch leveraging techniques and libraries.
+
+Music player
+
+Install with
+    ./mvnw clean install
 
 ## Table of Contents
 
 - [Project Title](#project-title)
-  - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
-  - [Features](#features)
-  - [Getting Started](#getting-started)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
   - [Usage](#usage)
-  - [Contributing](#contributing)
-  - [License](#license)
-  - [Acknowledgments](#acknowledgments)
 
 ## Introduction
 
-Explain what your project does and what problem it solves. Provide a high-level overview.
+
 
 ## Features
 
@@ -51,4 +50,3 @@ This project is licensed under the [Your License] - see the [LICENSE.md](LICENSE
 ## Acknowledgments
 
 Mention and thank contributors, libraries, or resources that you found helpful.
-

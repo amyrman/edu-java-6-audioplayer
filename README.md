@@ -5,7 +5,8 @@ Create an app from scratch leveraging techniques and libraries.
 Music player
 
 Install with
-    ./mvnw clean install
+
+```./mvnw clean install```
 
 ## Table of Contents
 

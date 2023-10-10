@@ -1,6 +1,7 @@
 package com.example;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.*;
 
@@ -47,6 +48,9 @@ public class AppUI implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     JFileChooser fileChooser = new JFileChooser();
+    FileNameExtensionFilter filter = new FileNameExtensionFilter(
+        "MP3 Files", "mp3");
+    fileChooser.setFileFilter(filter);
     int returnValue = fileChooser.showOpenDialog(null);
     if (returnValue == JFileChooser.APPROVE_OPTION) {
       // Do something with the selected file

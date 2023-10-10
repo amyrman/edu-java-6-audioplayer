@@ -4,6 +4,7 @@ import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.*;
+import java.io.File;
 
 public class AppUI implements ActionListener {
 
@@ -59,6 +60,12 @@ public class AppUI implements ActionListener {
   @Override
   public void actionPerformed(ActionEvent e) {
     JFileChooser fileChooser = new JFileChooser();
+    File downloadsDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Downloads");
+    if (downloadsDir.exists() && downloadsDir.isDirectory()) {
+      fileChooser.setCurrentDirectory(downloadsDir);
+    } else {
+      fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+    }
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
         "MP3 Files", "mp3");
     fileChooser.setFileFilter(filter);

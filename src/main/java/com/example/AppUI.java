@@ -12,9 +12,10 @@ public class AppUI implements ActionListener {
     JLabel label = new JLabel("Java Music Player");
 
     // JFrame.setDefaultLookAndFeelDecorated(true);
-    JFrame frame = new JFrame("Java Music Player");
+    JFrame frame = new JFrame("Java Exercise #6: Java Music Player");
 
     frame.setSize(300, 150);
+    frame.setLocationRelativeTo(null);
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
     // Add JOptionPane to close

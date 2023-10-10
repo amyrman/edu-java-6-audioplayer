@@ -8,10 +8,20 @@ import java.awt.event.*;
 public class AppUI implements ActionListener {
 
   public AppUI() {
+    try {
+      UIManager.setLookAndFeel(
+          UIManager.getSystemLookAndFeelClassName());
+    } catch (UnsupportedLookAndFeelException e) {
+    } catch (ClassNotFoundException e) {
+    } catch (InstantiationException e) {
+    } catch (IllegalAccessException e) {
+    }
+
+    listModel = new DefaultListModel<>();
+    fileList = new JList<>(listModel);
 
     JLabel label = new JLabel("Java Music Player");
 
-    // JFrame.setDefaultLookAndFeelDecorated(true);
     JFrame frame = new JFrame("Java Exercise #6: Java Music Player");
 
     frame.setSize(300, 150);

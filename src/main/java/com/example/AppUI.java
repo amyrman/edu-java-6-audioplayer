@@ -2,11 +2,14 @@ package com.example;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javafx.scene.media.MediaException;
 
 import java.awt.event.*;
 import java.io.File;
 
 public class AppUI implements ActionListener {
+  private DefaultListModel<String> listModel;
+  private JList<String> fileList;
 
   public AppUI() {
     try {
@@ -26,6 +29,7 @@ public class AppUI implements ActionListener {
     JFrame frame = new JFrame("Java Exercise #6: Java Music Player");
 
     frame.setSize(300, 150);
+    // cemter window
     frame.setLocationRelativeTo(null);
     frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
@@ -45,14 +49,12 @@ public class AppUI implements ActionListener {
     });
 
     JButton openButton = new JButton("Open");
-    openButton.setBounds(10, 10, 80, 25);
 
+    openButton.setBounds(10, 10, 80, 25);
     openButton.addActionListener(this);
 
     frame.add(openButton);
-
     frame.add(label);
-
     frame.setVisible(true);
 
   }
@@ -69,9 +71,17 @@ public class AppUI implements ActionListener {
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
         "MP3 Files", "mp3");
     fileChooser.setFileFilter(filter);
+
     int returnValue = fileChooser.showOpenDialog(null);
     if (returnValue == JFileChooser.APPROVE_OPTION) {
-      // Do something with the selected file
+      File selectedFile = fileChooser.getSelectedFile();
+      try {
+        String filePath = selectedFile.getAbsolutePath();
+        MP3Player mp3Player = new MP3Player();
+        mp3Player.play(filePath);
+      } catch (MediaException ex) {
+        ex.printStackTrace();
+      }
     }
   }
 }

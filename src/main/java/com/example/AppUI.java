@@ -1,6 +1,7 @@
 package com.example;
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -25,6 +27,7 @@ public class AppUI implements ActionListener {
   JScrollPane scrollPane = new JScrollPane(fileList);
 
   public AppUI() {
+
     // Set the look and feel of the UI to system
     try {
       UIManager.setLookAndFeel(
@@ -37,14 +40,11 @@ public class AppUI implements ActionListener {
     listModel = new DefaultListModel<>();
     fileList = new JList<>(listModel);
 
-    // Create the label object
-    JLabel label = new JLabel("Java Music Player");
-
     // Create the frame object
     JFrame frame = new JFrame("Java Exercise #6: Java Music Player");
-    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
     // Add a window listener to the frame to handle closing events
+    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     frame.addWindowListener(new java.awt.event.WindowAdapter() {
       @Override
       public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -58,14 +58,52 @@ public class AppUI implements ActionListener {
       }
     });
 
-    // Create the open button object
+    // Create the label object
+    JLabel label = new JLabel("Java Music Player");
+
+    // Create the main content panel with BorderLayout
+    JPanel contentPanel = new JPanel(new BorderLayout());
+
+    // Create open button object
     JButton openButton = new JButton("Open");
+    openButton.setActionCommand("Open Explorer");
     openButton.addActionListener(this);
 
-    // Add the components to the frame
-    frame.add(label, BorderLayout.NORTH);
-    frame.add(fileList, BorderLayout.CENTER);
-    frame.add(openButton, BorderLayout.SOUTH);
+    // Create playpause button object
+    JButton playPauseButton = new JButton("Play/Pause");
+    playPauseButton.setActionCommand("Play");
+    playPauseButton.addActionListener(this);
+
+    // Create stop button object
+    JButton stopButton = new JButton("Stop");
+    stopButton.addActionListener(this);
+
+    // Create prev button object
+    JButton prevButton = new JButton("Prev");
+    prevButton.addActionListener(this);
+
+    // Create next button object
+    JButton nextButton = new JButton("Next");
+    nextButton.addActionListener(this);
+    // Create a panel for the buttons with FlowLayout
+    JPanel buttonPanel = new JPanel(new FlowLayout());
+
+    // Add the label and file list to the top and center of the content panel
+    contentPanel.add(label, BorderLayout.NORTH);
+    contentPanel.add(fileList, BorderLayout.CENTER);
+
+    // Add the buttons to the button panel
+    buttonPanel.add(openButton);
+    buttonPanel.add(playPauseButton);
+    buttonPanel.add(stopButton);
+    buttonPanel.add(prevButton);
+    buttonPanel.add(nextButton);
+
+    // Add the button panel to the bottom of the content panel
+    contentPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+    // Add the content panel to the frame
+    frame.add(contentPanel);
 
     // Set the size and visibility of the frame
     frame.setSize(400, 400);
@@ -73,8 +111,7 @@ public class AppUI implements ActionListener {
     frame.setVisible(true);
   }
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
+  private void openFileExplorer() {
     JFileChooser fileChooser = new JFileChooser();
     setFileChooserDirectory(fileChooser);
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -89,6 +126,33 @@ public class AppUI implements ActionListener {
     }
   }
 
+  private void playSelectedFile() {
+    int selectedIndex = fileList.getSelectedIndex();
+    if (selectedIndex != -1) {
+      String filePath = listModel.getElementAt(selectedIndex);
+      MP3Player mp3Player = new MP3Player();
+      try {
+        mp3Player.play(filePath);
+      } catch (MediaException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    String actionCommand = e.getActionCommand();
+    switch (actionCommand) {
+      case "Open Explorer":
+        openFileExplorer();
+        break;
+      case "Play":
+        playSelectedFile();
+        break;
+      // Add cases for other actions as needed
+    }
+  }
+
   private void setFileChooserDirectory(JFileChooser fileChooser) {
     File downloadsDir = new File(System.getProperty("user.home") + System.getProperty("file.separator") + "Downloads");
     if (downloadsDir.exists() && downloadsDir.isDirectory()) {
@@ -100,13 +164,13 @@ public class AppUI implements ActionListener {
 
   private void addFilesToList(File[] files) {
     for (File file : files) {
-      try {
-        String filePath = file.getAbsolutePath();
-        listModel.addElement(filePath);
-        MP3Player mp3Player = new MP3Player();
-        mp3Player.play(filePath);
-      } catch (MediaException ex) {
-        ex.printStackTrace();
+      if (file.isFile()) {
+        try {
+          String filePath = file.getAbsolutePath();
+          listModel.addElement(filePath);
+        } catch (Exception ex) {
+          ex.printStackTrace();
+        }
       }
     }
   }

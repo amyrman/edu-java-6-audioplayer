@@ -1,12 +1,23 @@
 package com.example;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javafx.scene.media.MediaException;
-
 import java.awt.BorderLayout;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+import javafx.scene.media.MediaException;
 
 public class AppUI implements ActionListener {
   private DefaultListModel<String> listModel;

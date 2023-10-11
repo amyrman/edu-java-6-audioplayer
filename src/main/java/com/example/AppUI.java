@@ -93,8 +93,7 @@ public class AppUI implements ActionListener {
     frame.setVisible(true);
   }
 
-  @Override
-  public void actionPerformed(ActionEvent e) {
+  private void openFileExplorer() {
     JFileChooser fileChooser = new JFileChooser();
     setFileChooserDirectory(fileChooser);
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
@@ -106,6 +105,33 @@ public class AppUI implements ActionListener {
     if (returnValue == JFileChooser.APPROVE_OPTION) {
       File[] selectedFiles = fileChooser.getSelectedFiles();
       addFilesToList(selectedFiles);
+    }
+  }
+
+  private void playSelectedFile() {
+    int selectedIndex = fileList.getSelectedIndex();
+    if (selectedIndex != -1) {
+      String filePath = listModel.getElementAt(selectedIndex);
+      MP3Player mp3Player = new MP3Player();
+      try {
+        mp3Player.play(filePath);
+      } catch (MediaException ex) {
+        ex.printStackTrace();
+      }
+    }
+  }
+
+  @Override
+  public void actionPerformed(ActionEvent e) {
+    String actionCommand = e.getActionCommand();
+    switch (actionCommand) {
+      case "Open Explorer":
+        openFileExplorer();
+        break;
+      case "Play":
+        playSelectedFile();
+        break;
+      // Add cases for other actions as needed
     }
   }
 

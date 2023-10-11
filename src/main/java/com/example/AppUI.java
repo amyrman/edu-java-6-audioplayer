@@ -35,6 +35,7 @@ public class AppUI implements ActionListener {
 
   public AppUI() {
     mp3Player = new MP3Player();
+
     // Set the look and feel of the UI to system
     try {
       UIManager.setLookAndFeel(
@@ -77,7 +78,6 @@ public class AppUI implements ActionListener {
     openButton.setActionCommand("Open Explorer");
     openButton.addActionListener(this);
 
-    // Create play stop button object
     JButton playStopButton = new JButton("Play/Stop");
     playStopButton.setActionCommand("Play");
     playStopButton.addActionListener(this);
@@ -90,7 +90,7 @@ public class AppUI implements ActionListener {
     sortBox.addItem("Ascending");
     sortBox.addItem("Descending");
     sortBox.addActionListener(this);
-
+    
     // Create a panel for the buttons with FlowLayout
     JPanel buttonPanel = new JPanel(new FlowLayout());
 
@@ -174,6 +174,7 @@ public class AppUI implements ActionListener {
       listModel.clear();
       for (String s : list) {
         listModel.addElement(s);
+
       }
     }
   }

@@ -5,9 +5,14 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -22,11 +27,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javafx.scene.media.MediaException;
 
 public class AppUI implements ActionListener {
+  private MP3Player mp3Player;
   private DefaultListModel<String> listModel;
   private JList<String> fileList;
   JScrollPane scrollPane = new JScrollPane(fileList);
+  private JComboBox<String> sortBox;
 
   public AppUI() {
+    mp3Player = new MP3Player();
 
     // Set the look and feel of the UI to system
     try {
@@ -36,6 +44,7 @@ public class AppUI implements ActionListener {
         | IllegalAccessException e) {
       e.printStackTrace();
     }
+
     // Create the list model and list objects
     listModel = new DefaultListModel<>();
     fileList = new JList<>(listModel);
@@ -69,22 +78,19 @@ public class AppUI implements ActionListener {
     openButton.setActionCommand("Open Explorer");
     openButton.addActionListener(this);
 
-    // Create playpause button object
-    JButton playPauseButton = new JButton("Play/Pause");
-    playPauseButton.setActionCommand("Play");
-    playPauseButton.addActionListener(this);
+    JButton playStopButton = new JButton("Play/Stop");
+    playStopButton.setActionCommand("Play");
+    playStopButton.addActionListener(this);
 
-    // Create stop button object
-    JButton stopButton = new JButton("Stop");
-    stopButton.addActionListener(this);
+    JButton sortButton = new JButton("Sort");
+    sortButton.setActionCommand("Sort");
+    sortButton.addActionListener(this);
 
-    // Create prev button object
-    JButton prevButton = new JButton("Prev");
-    prevButton.addActionListener(this);
-
-    // Create next button object
-    JButton nextButton = new JButton("Next");
-    nextButton.addActionListener(this);
+    sortBox = new JComboBox<>();
+    sortBox.addItem("Ascending");
+    sortBox.addItem("Descending");
+    sortBox.addActionListener(this);
+    
     // Create a panel for the buttons with FlowLayout
     JPanel buttonPanel = new JPanel(new FlowLayout());
 
@@ -94,10 +100,8 @@ public class AppUI implements ActionListener {
 
     // Add the buttons to the button panel
     buttonPanel.add(openButton);
-    buttonPanel.add(playPauseButton);
-    buttonPanel.add(stopButton);
-    buttonPanel.add(prevButton);
-    buttonPanel.add(nextButton);
+    buttonPanel.add(playStopButton);
+    buttonPanel.add(sortBox);
 
     // Add the button panel to the bottom of the content panel
     contentPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -106,7 +110,7 @@ public class AppUI implements ActionListener {
     frame.add(contentPanel);
 
     // Set the size and visibility of the frame
-    frame.setSize(400, 400);
+    frame.setSize(600, 400);
     frame.setLocationRelativeTo(null); // center window
     frame.setVisible(true);
   }
@@ -126,15 +130,51 @@ public class AppUI implements ActionListener {
     }
   }
 
-  private void playSelectedFile() {
+  private void playStopSelectedFile() {
     int selectedIndex = fileList.getSelectedIndex();
     if (selectedIndex != -1) {
       String filePath = listModel.getElementAt(selectedIndex);
-      MP3Player mp3Player = new MP3Player();
-      try {
-        mp3Player.play(filePath);
-      } catch (MediaException ex) {
-        ex.printStackTrace();
+      if (mp3Player != null && mp3Player.isPlaying()) {
+        // Stop the mp3 player if it's already playing
+        mp3Player.stop();
+      } else {
+        // Start playing the mp3 file
+        try {
+          mp3Player.play(filePath);
+        } catch (MediaException ex) {
+          ex.printStackTrace();
+        }
+      }
+    }
+  }
+
+  private void sortList() {
+    String selected = (String) sortBox.getSelectedItem();
+    if (selected.equals("Ascending")) {
+      List<String> list = new ArrayList<>();
+      for (int i = 0; i < listModel.getSize(); i++) {
+        list.add(listModel.getElementAt(i));
+      }
+      Collections.sort(list);
+      listModel.clear();
+      for (String s : list) {
+        listModel.addElement(s);
+      }
+    } else if (selected.equals("Descending")) {
+      List<String> list = new ArrayList<>();
+      for (int i = 0; i < listModel.getSize(); i++) {
+        list.add(listModel.getElementAt(i));
+      }
+      Collections.sort(list, new Comparator<String>() {
+        @Override
+        public int compare(String o1, String o2) {
+          return o2.compareTo(o1);
+        }
+      });
+      listModel.clear();
+      for (String s : list) {
+        listModel.addElement(s);
+
       }
     }
   }
@@ -147,7 +187,13 @@ public class AppUI implements ActionListener {
         openFileExplorer();
         break;
       case "Play":
-        playSelectedFile();
+        playStopSelectedFile();
+        break;
+      default:
+        // Handle the sortBox selection
+        if (e.getSource() == sortBox) {
+          sortList();
+        }
         break;
       // Add cases for other actions as needed
     }
@@ -175,3 +221,20 @@ public class AppUI implements ActionListener {
     }
   }
 }
+
+// // // Un-implemented buttons
+// // Create stop button object
+// JButton stopButton = new JButton("Stop");
+// stopButton.addActionListener(this);
+
+// // Create prev button object
+// JButton prevButton = new JButton("Prev");
+// prevButton.addActionListener(this);
+
+// // Create next button object
+// JButton nextButton = new JButton("Next");
+// nextButton.addActionListener(this);
+
+// buttonPanel.add(stopButton);
+// buttonPanel.add(prevButton);
+// buttonPanel.add(nextButton);

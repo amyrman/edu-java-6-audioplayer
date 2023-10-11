@@ -42,9 +42,9 @@ public class AppUI implements ActionListener {
 
     // Create the frame object
     JFrame frame = new JFrame("Java Exercise #6: Java Music Player");
-    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
+    
     // Add a window listener to the frame to handle closing events
+    frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
     frame.addWindowListener(new java.awt.event.WindowAdapter() {
       @Override
       public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -58,15 +58,35 @@ public class AppUI implements ActionListener {
       }
     });
 
-    // Create the open button object
+    // Create open button object
     JButton openButton = new JButton("Open");
     openButton.addActionListener(this);
+
+    // Create playpause button object
+    JButton playPauseButton = new JButton("Play/Pause");
+    playPauseButton.addActionListener(this);
+
+    // Create stop button object
+    JButton stopButton = new JButton("Stop");
+    stopButton.addActionListener(this);
+
+    // Create prev button object
+    JButton prevButton = new JButton("Prev");
+    prevButton.addActionListener(this);
+
+    // Create next button object
+    JButton nextButton = new JButton("Next");
+    nextButton.addActionListener(this);
 
     // Add the components to the frame
     frame.add(label, BorderLayout.NORTH);
     frame.add(fileList, BorderLayout.CENTER);
     frame.add(openButton, BorderLayout.SOUTH);
-
+    frame.add(playPauseButton, BorderLayout.SOUTH);
+    frame.add(stopButton, BorderLayout.SOUTH);
+    frame.add(prevButton, BorderLayout.SOUTH);
+    frame.add(nextButton, BorderLayout.SOUTH);
+    
     // Set the size and visibility of the frame
     frame.setSize(400, 400);
     frame.setLocationRelativeTo(null); // center window

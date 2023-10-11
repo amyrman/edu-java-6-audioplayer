@@ -100,13 +100,24 @@ public class AppUI implements ActionListener {
 
   private void addFilesToList(File[] files) {
     for (File file : files) {
-      try {
-        String filePath = file.getAbsolutePath();
-        listModel.addElement(filePath);
-        MP3Player mp3Player = new MP3Player();
-        mp3Player.play(filePath);
-      } catch (MediaException ex) {
-        ex.printStackTrace();
+            if (file.isFile()) {
+        try {
+          String filePath = file.getAbsolutePath();
+          listModel.addElement(filePath);
+        } catch (Exception ex) {
+          ex.printStackTrace();
+
+          /* EARLIER VERSION WITH AUDIO PLAYBACK
+           * try {
+           * String filePath = file.getAbsolutePath();
+           * listModel.addElement(filePath);
+           * MP3Player mp3Player = new MP3Player();
+           * mp3Player.play(filePath);
+           * } catch (MediaException ex) {
+           * ex.printStackTrace();
+           * }
+           */
+        }
       }
     }
   }

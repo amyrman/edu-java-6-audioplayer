@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 
 public class AppUI {
     private MediaPlayer mediaPlayer;
-    private ObservableList<String> listModel;
+    ObservableList<String> listModel;
     private ListView<String> fileList;
     private ComboBox<String> sortBox;
 
@@ -136,7 +136,7 @@ public class AppUI {
         listModel.setAll(list);
     }
 
-    private void addFilesToList(List<File> files) {
+    void addFilesToList(List<File> files) {
         for (File file : files) {
             if (file.isFile()) {
                 try {

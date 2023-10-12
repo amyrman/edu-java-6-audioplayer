@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -27,14 +25,14 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javafx.scene.media.MediaException;
 
 public class AppUI implements ActionListener {
-  private MP3Player mp3Player;
+  private AudioPlayer audioPlayer;
   private DefaultListModel<String> listModel;
   private JList<String> fileList;
   JScrollPane scrollPane = new JScrollPane(fileList);
   private JComboBox<String> sortBox;
 
   public AppUI() {
-    mp3Player = new MP3Player();
+    audioPlayer = new AudioPlayer();
 
     // Set the look and feel of the UI to system
     try {
@@ -119,7 +117,7 @@ public class AppUI implements ActionListener {
     JFileChooser fileChooser = new JFileChooser();
     setFileChooserDirectory(fileChooser);
     FileNameExtensionFilter filter = new FileNameExtensionFilter(
-        "MP3 Files", "mp3");
+        "Audio Files", "mp3", "wav", "aiff", "au", "snd", "mid", "rmi");
     fileChooser.setFileFilter(filter);
     fileChooser.setMultiSelectionEnabled(true);
 
@@ -134,13 +132,13 @@ public class AppUI implements ActionListener {
     int selectedIndex = fileList.getSelectedIndex();
     if (selectedIndex != -1) {
       String filePath = listModel.getElementAt(selectedIndex);
-      if (mp3Player != null && mp3Player.isPlaying()) {
+      if (audioPlayer != null && audioPlayer.isPlaying()) {
         // Stop the mp3 player if it's already playing
-        mp3Player.stop();
+        audioPlayer.stop();
       } else {
         // Start playing the mp3 file
         try {
-          mp3Player.play(filePath);
+          audioPlayer.play(filePath);
         } catch (MediaException ex) {
           ex.printStackTrace();
         }
@@ -150,32 +148,18 @@ public class AppUI implements ActionListener {
 
   private void sortList() {
     String selected = (String) sortBox.getSelectedItem();
+    List<String> list = new ArrayList<>();
+    for (int i = 0; i < listModel.getSize(); i++) {
+      list.add(listModel.get(i));
+    }
     if (selected.equals("Ascending")) {
-      List<String> list = new ArrayList<>();
-      for (int i = 0; i < listModel.getSize(); i++) {
-        list.add(listModel.getElementAt(i));
-      }
-      Collections.sort(list);
-      listModel.clear();
-      for (String s : list) {
-        listModel.addElement(s);
-      }
+      list.sort((s1, s2) -> s1.compareTo(s2));
     } else if (selected.equals("Descending")) {
-      List<String> list = new ArrayList<>();
-      for (int i = 0; i < listModel.getSize(); i++) {
-        list.add(listModel.getElementAt(i));
-      }
-      Collections.sort(list, new Comparator<String>() {
-        @Override
-        public int compare(String o1, String o2) {
-          return o2.compareTo(o1);
-        }
-      });
-      listModel.clear();
-      for (String s : list) {
-        listModel.addElement(s);
-
-      }
+      list.sort((s1, s2) -> s2.compareTo(s1));
+    }
+    listModel.clear();
+    for (String s : list) {
+      listModel.addElement(s);
     }
   }
 

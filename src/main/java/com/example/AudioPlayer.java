@@ -6,7 +6,7 @@ import javafx.scene.media.MediaPlayer;
 
 import java.io.File;
 
-public class MP3Player {
+public class AudioPlayer {
     private MediaPlayer mediaPlayer;
     private boolean isPlaying;
     
@@ -31,7 +31,6 @@ public class MP3Player {
             mediaPlayer.stop();
             isPlaying = false;
         }
-        mediaPlayer.stop();
     }
 
     public boolean isPlaying() {

@@ -4,12 +4,9 @@ Create an app from scratch leveraging techniques and libraries.
 
 Audio player
 
-Run with
+Run with ```./mvnw javafx:run```
 
-```./mvnw javafx:run```
-
-Test with
-```./mvnw test```
+Test with ```./mvnw test```
 
 ## Table of Contents
 

@@ -11,19 +11,20 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
 public class AppUI {
     private MediaPlayer mediaPlayer;
     private ObservableList<String> listModel;
@@ -43,7 +44,7 @@ public class AppUI {
 
         Button playPauseButton = new Button("Play/Pause");
         playPauseButton.setOnAction(e -> playPauseSelectedFile());
-        
+
         Button stopButton = new Button("Stop");
         stopButton.setOnAction(e -> stopSelectedFile());
 
@@ -60,7 +61,7 @@ public class AppUI {
             }
         });
 
-        HBox buttonBox = new HBox(openButton, playPauseButton,  stopButton, sortBox, exitButton);
+        HBox buttonBox = new HBox(openButton, playPauseButton, stopButton, sortBox, exitButton);
         buttonBox.setSpacing(10);
 
         VBox root = new VBox(label, fileList, buttonBox);
@@ -90,7 +91,8 @@ public class AppUI {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Audio Files");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Audio Files", "*.mp3", "*.wav", "*.aiff", "*.au", "*.snd", "*.mid", "*.rmi"),
+                new FileChooser.ExtensionFilter("Audio Files", "*.mp3", "*.wav", "*.aiff", "*.au", "*.snd", "*.mid",
+                        "*.rmi"),
                 new FileChooser.ExtensionFilter("All Files", "*.*"));
         List<File> selectedFiles = fileChooser.showOpenMultipleDialog(null);
         if (selectedFiles != null) {
@@ -105,7 +107,7 @@ public class AppUI {
             if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PLAYING) {
                 // Pause the media player if it's already playing
                 mediaPlayer.pause();
-              } else if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
+            } else if (mediaPlayer != null && mediaPlayer.getStatus() == MediaPlayer.Status.PAUSED) {
                 // Resume playback if the media player is paused
                 mediaPlayer.play();
             } else {

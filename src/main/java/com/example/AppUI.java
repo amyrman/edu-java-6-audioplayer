@@ -90,6 +90,7 @@ public class AppUI {
     private void openFileExplorer() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Audio Files");
+        fileChooser.setInitialDirectory(new File("src\\main\\resources\\exampleaudio"));
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Audio Files", "*.mp3", "*.wav", "*.aiff", "*.au", "*.snd", "*.mid",
                         "*.rmi"),

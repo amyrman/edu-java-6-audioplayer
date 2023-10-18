@@ -2,11 +2,11 @@
 
 Create an app from scratch leveraging techniques and libraries.
 
-Music player
+Audio player
 
-Install with
+Run with ```./mvnw javafx:run```
 
-```./mvnw clean install```
+Test with ```./mvnw test```
 
 ## Table of Contents
 

@@ -57,29 +57,29 @@ public class AppTest {
     }
 
     @Test
-public void testSortList() {
-    // Create a new instance of AppUI
-    AppUI appUI = new AppUI();
+    public void testSortList() {
+        // Create a new instance of AppUI
+        AppUI appUI = new AppUI();
 
-// Initialize the listModel field
-    appUI.listModel = FXCollections.observableArrayList();
-    appUI.sortBox = new ComboBox<>();
+        // Initialize required fields
+        appUI.listModel = FXCollections.observableArrayList();
+        appUI.sortBox = new ComboBox<>();
 
-    // Add some items to the listModel
-    appUI.listModel.addAll("apple", "banana", "cherry", "date", "elderberry");
+        // Add some items to the listModel
+        appUI.listModel.addAll("apple", "banana", "cherry", "date", "elderberry");
 
-    // Sort the listModel in ascending order
-    appUI.sortBox.getSelectionModel().select("Ascending");
-    appUI.sortList();
+        // Sort the listModel in ascending order
+        appUI.sortBox.getSelectionModel().select("Ascending");
+        appUI.sortList();
 
-    // Check that the listModel is sorted correctly
-    assertThat(appUI.listModel).containsExactly("apple", "banana", "cherry", "date", "elderberry");
+        // Check that the listModel is sorted correctly
+        assertThat(appUI.listModel).containsExactly("apple", "banana", "cherry", "date", "elderberry");
 
-    // Sort the listModel in descending order
-    appUI.sortBox.getSelectionModel().select("Descending");
-    appUI.sortList();
+        // Sort the listModel in descending order
+        appUI.sortBox.getSelectionModel().select("Descending");
+        appUI.sortList();
 
-    // Check that the listModel is sorted correctly
-    assertThat(appUI.listModel).containsExactly("elderberry", "date", "cherry", "banana", "apple");
-}
+        // Check that the listModel is sorted correctly
+        assertThat(appUI.listModel).containsExactly("elderberry", "date", "cherry", "banana", "apple");
+    }
 }

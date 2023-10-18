@@ -29,7 +29,7 @@ public class AppUI {
     private MediaPlayer mediaPlayer;
     ObservableList<String> listModel;
     private ListView<String> fileList;
-    private ComboBox<String> sortBox;
+    ComboBox<String> sortBox;
 
     public void show() {
         // Create the UI
@@ -126,7 +126,7 @@ public class AppUI {
         }
     }
 
-    private void sortList() {
+    void sortList() {
         String selected = sortBox.getSelectionModel().getSelectedItem();
         List<String> list = new ArrayList<>(listModel);
         if (selected.equals("Ascending")) {

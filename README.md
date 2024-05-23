@@ -4,6 +4,12 @@ Create an app from scratch leveraging techniques and libraries e.g. Swing, strea
 
 Audio player
 
-Run with ```./mvnw javafx:run```
+Run with
+```
+./mvnw javafx:run
+```
 
-Test with ```./mvnw test```
+Test with
+```
+./mvnw test
+```
